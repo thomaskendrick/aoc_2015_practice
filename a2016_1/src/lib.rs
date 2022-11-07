@@ -1,5 +1,3 @@
-use std::convert::TryFrom;
-
 pub fn part_a(input: &str) -> isize {
    let mut floor = 0; 
 
@@ -29,15 +27,15 @@ pub fn part_b(input: &str) -> usize {
 
 #[cfg(test)]
 mod tests {
-    const input: &str = include_str!("input.txt");
+    const INPUT: &str = include_str!("input.txt");
 
     #[test]
     fn part_a() {
-        assert_eq!(super::part_a(input), 74);
+        assert_eq!(super::part_a(INPUT), 74);
     }
 
     #[test]
     fn part_b() {
-        assert_eq!(super::part_b(input), 1795);
+        assert_eq!(super::part_b(INPUT), 1795);
     }
 }
