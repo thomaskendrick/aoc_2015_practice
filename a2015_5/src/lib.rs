@@ -27,14 +27,40 @@ impl ElfString {
             })
     }
 
+    fn contains_double_letter_with_gap(&self) -> bool {
+        self.string
+            .chars()
+            .collect::<Vec<char>>()
+            .windows(3)
+            .any(|window| match window {
+                [a, _, b] => a == b,
+                _ => panic!("bad window"),
+            })
+    }
+
     fn contains_bad_strings(&self) -> bool {
         BAD_STRINGS.iter().any(|bs| self.string.contains(bs))
+    }
+
+    fn contains_non_overlapping_pair(&self) -> bool {
+        let chars: Vec<_> = self.string.chars().collect();
+
+        chars.windows(2).enumerate().any(|(i, pair)| {
+            let tail = &chars[i + 2..];
+            tail.windows(2)
+                .any(|target_pair| pair[0] == target_pair[0] && pair[1] == target_pair[1])
+        })
     }
 
     fn is_nice(&self) -> bool {
         self.contains_three_vowels()
             && self.contains_double_letter()
             && !self.contains_bad_strings()
+    }
+
+    fn is_nice_pt2(&self) -> bool {
+        self.contains_non_overlapping_pair()
+            && self.contains_double_letter_with_gap()
     }
 }
 
@@ -49,6 +75,17 @@ pub fn part_a(input: &str) -> usize {
         .count()
 }
 
+pub fn part_b(input: &str) -> usize {
+    input
+        .trim()
+        .lines()
+        .map(|l| ElfString::new(l))
+        .collect::<Vec<ElfString>>()
+        .iter()
+        .filter(|es| es.is_nice_pt2())
+        .count()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -58,6 +95,11 @@ mod tests {
     #[test]
     fn test_part_a() {
         assert_eq!(part_a(INPUT), 255);
+    }
+
+    #[test]
+    fn test_part_b() {
+        assert_eq!(part_b(INPUT), 55);
     }
 
     #[test]
@@ -90,7 +132,30 @@ mod tests {
         let test_elf_string = ElfString::new("foxya");
         assert_eq!(test_elf_string.contains_bad_strings(), true);
     }
-
+    #[test]
+    fn contains_double_letter_with_gap_true() {
+        let test_elf_string = ElfString::new("abcxyxabc");
+        assert_eq!(test_elf_string.contains_double_letter_with_gap(), true);
+    }
+    #[test]
+    fn contains_double_letter_with_gap_false() {
+        let test_elf_string = ElfString::new("abcabc");
+        assert_eq!(test_elf_string.contains_double_letter_with_gap(), false);
+    }
+    #[test]
+    fn contains_non_overlapping_pair_false() {
+        let test_elf_string = ElfString::new("abcdef");
+        assert_eq!(test_elf_string.contains_non_overlapping_pair(), false);
+    }
+    fn contains_non_overlapping_pair_false_2() {
+        let test_elf_string = ElfString::new("aaadef");
+        assert_eq!(test_elf_string.contains_non_overlapping_pair(), false);
+    }
+    #[test]
+    fn contains_non_overlapping_pair_true() {
+        let test_elf_string = ElfString::new("abcabc");
+        assert_eq!(test_elf_string.contains_non_overlapping_pair(), true);
+    }
     #[test]
     fn is_nice() {
         let t1 = ElfString::new("ugknbfddgicrmopn");
