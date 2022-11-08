@@ -6,10 +6,10 @@ pub fn part_a(input: &str) -> i64 {
 
 #[cfg(test)]
 mod tests {
-    const input: &str = include_str1("input.txt");
+    const INPUT: &str = include_str!("input.txt");
 
     #[test]
     fn part_a() {
-        assert_eq!(super::part_a(input), 0);
+        assert_eq!(super::part_a(INPUT), 0);
     }
 }
