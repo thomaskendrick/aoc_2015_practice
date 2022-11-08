@@ -26,6 +26,10 @@ name = "a2015_5"
 version = "0.1.0"
 
 [[package]]
+name = "a2015_6"
+version = "0.1.0"
+
+[[package]]
 name = "md5"
 version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
