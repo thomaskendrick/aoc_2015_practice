@@ -36,16 +36,22 @@ pub fn part_a_b(input: &str, include_me: bool) -> i32 {
             people.insert(String::from(person), opinion_map);
         }
     }
+    let mut people_iter = people.keys().cloned();
+    // Remove one name for now as we don't want cyclic permutations.
+    let first_name = people_iter.next().unwrap();
 
-    let mut people_names: Vec<String> = people.keys().cloned().collect();
+    let mut people_names: Vec<String> = people_iter.collect();
+
     if include_me {
         people_names.push(String::from("Tom"));
     }
     let ha = HeapsAlgo::new(&people_names);
 
+
     let mut optimal_happyness: i32 = i32::MIN;
 
-    for p in ha.permutations {
+    for mut p in ha.permutations {
+        p.push(first_name.to_owned());
         let mut tot_happiness: i32 = 0;
         for (i, person) in p.iter().enumerate() {
             if person == "Tom" {
