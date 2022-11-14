@@ -3,9 +3,10 @@ pub struct HeapsAlgo<T> {
 }
 
 impl<T: Clone> HeapsAlgo<T> {
-    pub fn new(list: &mut [T]) -> Self {
+    pub fn new(list: &[T]) -> Self {
+        let mut initial_list = list.to_owned();
         let mut ha = Self { permutations: Vec::new() };
-        ha.generate(list.len(), list);
+        ha.generate(list.len(), &mut initial_list);
         ha
     }
     fn generate(&mut self, size: usize, list: &mut [T]) {

@@ -85,7 +85,6 @@ pub fn part_a_b(input: &str) -> (String, String) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    const INPUT: &str = include_str!("input.txt");
 
     #[test]
     fn can_increment() {

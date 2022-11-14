@@ -147,6 +147,7 @@ mod tests {
         let test_elf_string = ElfString::new("abcdef");
         assert_eq!(test_elf_string.contains_non_overlapping_pair(), false);
     }
+    #[test]
     fn contains_non_overlapping_pair_false_2() {
         let test_elf_string = ElfString::new("aaadef");
         assert_eq!(test_elf_string.contains_non_overlapping_pair(), false);
