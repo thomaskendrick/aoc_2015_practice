@@ -1,7 +1,7 @@
 [package]
-name = "a2015_1"
+name = "a2015_15"
 version = "0.1.0"
 authors = ["Thomas Kendrick <tom@tkendrick.com>"]
-edition = "2021"
+edition = "2018"
 
 [dependencies]
